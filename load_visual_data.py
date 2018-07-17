@@ -20,6 +20,7 @@ def main():
         screen = utils.extract_gameboard(screen, (WINDOW_WIDTH, WINDOW_HEIGHT))
         screen = utils.reduce_gameboard(screen, (WINDOW_WIDTH, WINDOW_HEIGHT))
         screen = utils.m_gameboard(screen, (WINDOW_WIDTH, WINDOW_HEIGHT))
+        screen = utils.draw_search_areas(screen)
         screen = cv2.resize(screen, None, fx=0.75, fy=0.75)
         print('Frame took {} seconds'.format(time.time() - last_time))
         last_time = time.time()
