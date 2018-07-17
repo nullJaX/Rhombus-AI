@@ -1,38 +1,41 @@
 # Done by Frannecklp
 
-import cv2
-import numpy as np
-import win32gui, win32ui, win32con, win32api
+from cv2 import cvtColor, COLOR_BGRA2RGB
+from numpy import fromstring
+from win32api import GetSystemMetrics
+from win32con import SM_CXVIRTUALSCREEN, SM_CYVIRTUALSCREEN, SM_YVIRTUALSCREEN, SRCCOPY, SM_XVIRTUALSCREEN
+from win32ui import CreateDCFromHandle, CreateBitmap
+from win32gui import GetDesktopWindow, DeleteObject, GetWindowDC, ReleaseDC
 
 
 def grab_screen(region=None):
-    hwin = win32gui.GetDesktopWindow()
+    hwin = GetDesktopWindow()
 
     if region:
         left, top, x2, y2 = region
         width = x2 - left + 1
         height = y2 - top + 1
     else:
-        width = win32api.GetSystemMetrics(win32con.SM_CXVIRTUALSCREEN)
-        height = win32api.GetSystemMetrics(win32con.SM_CYVIRTUALSCREEN)
-        left = win32api.GetSystemMetrics(win32con.SM_XVIRTUALSCREEN)
-        top = win32api.GetSystemMetrics(win32con.SM_YVIRTUALSCREEN)
+        width = GetSystemMetrics(SM_CXVIRTUALSCREEN)
+        height = GetSystemMetrics(SM_CYVIRTUALSCREEN)
+        left = GetSystemMetrics(SM_XVIRTUALSCREEN)
+        top = GetSystemMetrics(SM_YVIRTUALSCREEN)
 
-    hwindc = win32gui.GetWindowDC(hwin)
-    srcdc = win32ui.CreateDCFromHandle(hwindc)
+    hwindc = GetWindowDC(hwin)
+    srcdc = CreateDCFromHandle(hwindc)
     memdc = srcdc.CreateCompatibleDC()
-    bmp = win32ui.CreateBitmap()
+    bmp = CreateBitmap()
     bmp.CreateCompatibleBitmap(srcdc, width, height)
     memdc.SelectObject(bmp)
-    memdc.BitBlt((0, 0), (width, height), srcdc, (left, top), win32con.SRCCOPY)
+    memdc.BitBlt((0, 0), (width, height), srcdc, (left, top), SRCCOPY)
 
-    signedIntsArray = bmp.GetBitmapBits(True)
-    img = np.fromstring(signedIntsArray, dtype='uint8')
+    signed_ints_array = bmp.GetBitmapBits(True)
+    img = fromstring(signed_ints_array, dtype='uint8')
     img.shape = (height, width, 4)
 
     srcdc.DeleteDC()
     memdc.DeleteDC()
-    win32gui.ReleaseDC(hwin, hwindc)
-    win32gui.DeleteObject(bmp.GetHandle())
+    ReleaseDC(hwin, hwindc)
+    DeleteObject(bmp.GetHandle())
 
-    return cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
+    return cvtColor(img, COLOR_BGRA2RGB)
