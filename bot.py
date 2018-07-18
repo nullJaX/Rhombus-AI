@@ -60,8 +60,7 @@ def recognize_frame(frame):
         return SPACE
     else:
         boxes_history = []
-        index = recu_winner(boxes, top_box, bottom_box, left_box, right_box, boxes_history)
-        return convert_index_2_key(index)
+        return convert_index_2_key(recu_winner(boxes, top_box, bottom_box, left_box, right_box, boxes_history))
 
 
 def main():
@@ -79,8 +78,7 @@ def main():
                              WINDOW_HEIGHT)
         screen = cvtColor(screen, COLOR_BGR2GRAY)
         # Perform bot routine
-        key = recognize_frame(screen)
-        PressNRealese(key)
+        PressNRealese(recognize_frame(screen))
 
         print('Frame took {} seconds'.format(time() - last_time))
         last_time = time()
