@@ -20,7 +20,7 @@ def reduce_gameboard(image, window_height):
 
 # Hide unnecessary contours
 def m_gameboard(image, window_height):
-    width, height, _ = image.shape
+    height, width, _ = image.shape
 
     rect_x1 = int(width / 2 - (width / (1.5 * sqrt(2))))
     rect_x2 = int(width / 2 + (width / (1.5 * sqrt(2))))
@@ -37,7 +37,7 @@ def m_gameboard(image, window_height):
 
 # Hide unnecessary contours (Alignment)
 def m_gameboard_4_debug(image, window_height):
-    width, height, _ = image.shape
+    height, width, _ = image.shape
     mask = ones(image.shape, uint8) * 255
     rectangle(mask, (width / 2 - width / 8, height / 2 - height / 8),
               (width / 2 + width / 8, height / 2 + height / 8), (0, 0, 0), FILLED)
@@ -49,7 +49,7 @@ def m_gameboard_4_debug(image, window_height):
 
 # Draw cross and search areas for alignment
 def draw_search_areas(image):
-    width, height, _ = image.shape
+    height, width, _ = image.shape
     rectangle(image, (width / 3, 0), (2 * width / 3, height / 6), (255, 0, 0))  # top
     rectangle(image, (width / 3, 5*height/6), (2 * width / 3, height), (255, 0, 0))  # bottom
     rectangle(image, (0, height / 3), (width / 6, 2 * height / 3), (255, 0, 0))  # left
