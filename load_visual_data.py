@@ -30,9 +30,10 @@ def main():
         last_time = time()
         imshow('window', screen)
 
-        if waitKey(25) & 0xFF == ord('q'):
+        if waitKey(1) & 0xFF == ord('q'):
             destroyAllWindows()
             break
 
 
-main()
+if __name__ == '__main__':
+    main()
