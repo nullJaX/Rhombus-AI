@@ -3,3 +3,5 @@ opencv-python
 pywin32
 pypiwin32
 numpy
+tqdm
+pandas
