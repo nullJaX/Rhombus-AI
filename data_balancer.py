@@ -1,5 +1,5 @@
-import numpy as np
-import pandas as pd
+from numpy import min, load, save
+from pandas import DataFrame
 from collections import Counter
 from random import shuffle
 from tqdm import tqdm
@@ -12,8 +12,8 @@ FILENAME_OUTPUT = "./data/balanced/training_data_balanced.npy"
 def main():
     final_data = []
     for level in tqdm(LEVELS):
-        train_data = np.load(FILENAME_INPUT.format(level))
-        df = pd.DataFrame(train_data)
+        train_data = load(FILENAME_INPUT.format(level))
+        df = DataFrame(train_data)
         print(Counter(df[1].apply(str)))
 
         lefts = []
@@ -45,7 +45,7 @@ def main():
         shuffle(lefts)
         shuffle(rights)
         shuffle(spaces)
-        min_length = np.min([len(ups), len(downs), len(lefts), len(rights), len(spaces)])
+        min_length = min([len(ups), len(downs), len(lefts), len(rights), len(spaces)])
         ups = ups[:min_length]
         spaces = spaces[:min_length]
         downs = downs[:min_length]
@@ -57,7 +57,7 @@ def main():
         final_data.extend(rights)
         final_data.extend(spaces)
         shuffle(final_data)
-        np.save(FILENAME_OUTPUT, final_data)
+        save(FILENAME_OUTPUT, final_data)
     print(len(final_data))
 
 
