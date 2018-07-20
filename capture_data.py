@@ -8,7 +8,7 @@ from util.getkeys import key_check
 from util.grabscreen import grab_screen
 from utils import extract_gameboard, reduce_gameboard, m_gameboard
 
-LEVEL = "EASY"
+LEVEL = "EXPERT"
 FILENAME = "./data/capture/training_data_{}.npy".format(LEVEL)
 
 
@@ -60,7 +60,7 @@ def main():
             response = recognize_frame(screen)
             PressNRealese(response)
             output = obtain_result_array(response)
-            screen = resize(screen, None, fx=0.5, fy=0.5)
+            screen = resize(screen, None, fx=0.5,   fy=0.5)
             training_data.append([screen, output])
             if len(training_data) % 1000 == 0:
                 print("Captured data: " + str(len(training_data)) + ". Saving data!")
