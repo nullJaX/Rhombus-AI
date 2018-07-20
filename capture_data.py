@@ -3,7 +3,7 @@ from time import sleep
 from numpy import load, save
 from cv2 import cvtColor, COLOR_BGR2GRAY, resize
 from bot import WINDOW_HEIGHT, WINDOW_WIDTH, recognize_frame
-from util.directkeys import UP, DOWN, LEFT, RIGHT, SPACE
+from util.directkeys import UP, DOWN, LEFT, RIGHT, SPACE, PressNRealese
 from util.getkeys import key_check
 from util.grabscreen import grab_screen
 from utils import extract_gameboard, reduce_gameboard, m_gameboard
@@ -57,7 +57,9 @@ def main():
                 WINDOW_HEIGHT)
             screen = cvtColor(screen, COLOR_BGR2GRAY)
             # Perform bot routine
-            output = obtain_result_array(recognize_frame(screen))
+            response = recognize_frame(screen)
+            PressNRealese(response)
+            output = obtain_result_array(response)
             screen = resize(screen, None, fx=0.5, fy=0.5)
             training_data.append([screen, output])
             if len(training_data) % 1000 == 0:
