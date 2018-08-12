@@ -1,5 +1,5 @@
 from os import path
-from keras import Sequential
+from keras.models import Sequential
 from keras.metrics import categorical_accuracy
 from keras.layers import Conv2D, Dropout, MaxPooling2D, Flatten, Dense
 
