@@ -29,10 +29,10 @@ def recu_winner(boxes, top_box, bottom_box, left_box, right_box, boxes_history):
     if count_nonzero(boxes) > 1:
 
         # Divide all sections and consider the half of their area (nearer the center)
-        top_box = top_box[:len(top_box[:, 0]) / 2, :]
-        bottom_box = bottom_box[len(bottom_box[:, 0]) / 2:, :]
-        left_box = left_box[:, len(left_box[0, :]) / 2:]
-        right_box = right_box[:, :len(right_box[0, :]) / 2]
+        top_box = top_box[:int(len(top_box[:, 0]) / 2), :]
+        bottom_box = bottom_box[int(len(bottom_box[:, 0]) / 2):, :]
+        left_box = left_box[:, int(len(left_box[0, :]) / 2):]
+        right_box = right_box[:, :int(len(right_box[0, :]) / 2)]
         boxes = [count_nonzero(top_box), count_nonzero(left_box), count_nonzero(bottom_box),
                  count_nonzero(right_box)]
         return recu_winner(boxes, top_box, bottom_box, left_box, right_box, boxes_history)
@@ -45,10 +45,10 @@ def recognize_frame(frame):
     height, width = frame.shape
 
     # Obtain section boxes
-    top_box = frame[0:(height / 6), (width / 3):(2 * width / 3)]
-    bottom_box = frame[(5 * height / 6):height, (width / 3):(2 * width / 3)]
-    left_box = frame[(height / 3):(2 * height / 3), 0:(width / 6)]
-    right_box = frame[(height / 3):(2 * height / 3), (5 * width / 6):width]
+    top_box = frame[0:int(height / 6), int(width / 3):int(2 * width / 3)]
+    bottom_box = frame[int(5 * height / 6):height, int(width / 3):int(2 * width / 3)]
+    left_box = frame[int(height / 3):int(2 * height / 3), 0:int(width / 6)]
+    right_box = frame[int(height / 3):int(2 * height / 3), int(5 * width / 6):width]
 
     # Count how many pixels are not black in each section
     boxes = [count_nonzero(top_box), count_nonzero(left_box), count_nonzero(bottom_box),
@@ -74,7 +74,7 @@ def main():
     while True:
         # Grab screen
         screen = grab_screen(region=(0, 32, WINDOW_WIDTH, WINDOW_HEIGHT + 32))
-        screen = m_gameboard(reduce_gameboard(extract_gameboard(screen, (WINDOW_WIDTH, WINDOW_HEIGHT)), WINDOW_HEIGHT),
+        screen = m_gameboard(reduce_gameboard(extract_gameboard(screen, WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_HEIGHT),
                              WINDOW_HEIGHT)
         screen = cvtColor(screen, COLOR_BGR2GRAY)
         # Perform bot routine

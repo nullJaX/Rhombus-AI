@@ -53,7 +53,7 @@ def main():
             # Grab screen
             screen = grab_screen(region=(0, 32, WINDOW_WIDTH, WINDOW_HEIGHT + 32))
             screen = m_gameboard(
-                reduce_gameboard(extract_gameboard(screen, (WINDOW_WIDTH, WINDOW_HEIGHT)), WINDOW_HEIGHT),
+                reduce_gameboard(extract_gameboard(screen, WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_HEIGHT),
                 WINDOW_HEIGHT)
             screen = cvtColor(screen, COLOR_BGR2GRAY)
             # Perform bot routine

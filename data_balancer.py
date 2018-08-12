@@ -12,7 +12,7 @@ FILENAME_OUTPUT = "./data/balanced/training_data_balanced.npy"
 def main():
     final_data = []
     for level in tqdm(LEVELS):
-        train_data = load(FILENAME_INPUT.format(level))
+        train_data = load(FILENAME_INPUT.format(level), encoding="bytes")
         df = DataFrame(train_data)
         print(Counter(df[1].apply(str)))
 

@@ -17,7 +17,7 @@ def main():
     # Main loop
     while True:
         screen = grab_screen(region=(0, 32, WINDOW_WIDTH, WINDOW_HEIGHT + 32))
-        screen = extract_gameboard(screen, (WINDOW_WIDTH, WINDOW_HEIGHT))
+        screen = extract_gameboard(screen, WINDOW_WIDTH, WINDOW_HEIGHT)
         screen = reduce_gameboard(screen, WINDOW_HEIGHT)
         screen = m_gameboard_4_debug(screen, WINDOW_HEIGHT)
 
